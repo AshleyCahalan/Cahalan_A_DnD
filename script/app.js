@@ -7,6 +7,7 @@
 	// constant -> something that will never change / can't be redefined
 	const puzzleSelectors = document.querySelectorAll("#buttonHolder img"),
 				dropZoneContainer = document.querySelector(".puzzle-board"),
+				dragZone = document.querySelector(".puzzle-pieces"),
 				dragImages = document.querySelectorAll(".puzzle-image"),
 				dropZones = document.querySelectorAll(".drop-zone");
 
@@ -32,7 +33,7 @@
 
 		// check to see if there's already an element there
 		// if so then kill this function
-		if (this.childNodes.length > 0) { return; }
+		if (this.childNodes.length > 0) { return; } // like an exit code word
 
 
 
@@ -45,7 +46,17 @@
 
 	// this function runs when the bottom nav buttons are clicked
 	// it changes the bg image of the drop zone div using the style property
+
+	// and we're also sending the thumbnail images back to the drag zone
 	function changeBGImage() {
+		// step 1 - check all the drop zones
+		// step 2 - if a drop zone has an image in it, then it needs to go back where it came from
+
+		dropZones.forEach(zone => {
+			if (zone.childNodes.length > 0) {
+				dragZone.appendChild(zone.firstElementChild);
+			}
+		})
 		// get the custom data attribute from the clicked button
 		let currentImage = this.dataset.imageref;
 
